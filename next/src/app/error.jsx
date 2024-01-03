@@ -1,9 +1,8 @@
 "use client";
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { redirect } from 'next/navigation';
 
 const Error = (error, reset) => {
-    const router = useRouter();
 
     useEffect(() => {
         // Optionally log the error to an error reporting service
@@ -13,8 +12,7 @@ const Error = (error, reset) => {
     return (
         <>
             <h1>Error, something wrong</h1>
-            <button onClick={() => router.push('/')}>Go home</button>
-            <button onClick={() => router.back()}>Go back</button>
+            <button onClick={() => redirect('/')}>Go home</button>
         </>
     )
 }

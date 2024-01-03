@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react';
 import { Formik, Form, ErrorMessage} from 'formik';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 
 import { TextInput, Checkbox } from './inputForm';
 import { validSchemaSignIn, validSchemaSignUp } from './validSchema';
@@ -19,6 +19,7 @@ import buttonsStyles from '@/app/components/styles/buttons.module.scss';
 export const SignInForm = () => {
     const [invalidPassword, setInvalidPassword] = useState(false);
     const [invalidEmail, setInvalidEmail] = useState(false);
+
     const router = useRouter();
 
     return (
@@ -33,7 +34,6 @@ export const SignInForm = () => {
                 try {
                     const data = await fetchUser('signin', values);
                     
-                    console.log(data)
                     if (data.message === 'sign in succesfull') {
                         await setCookies(data.user.name, data.token, 'login', 'token')
                         router.push('/');
@@ -49,7 +49,7 @@ export const SignInForm = () => {
                         }, 3000)
                     }
                 } catch(error) {
-                    console.log('Error while submitting:', error)
+                    console.error('Error while submitting:', error)
                 } finally {
                     setSubmitting(false)
                 }
@@ -83,9 +83,8 @@ export const SignInForm = () => {
 }
 
 export const SignUpForm = () => {
-    //const _APIURL = config.apiUrl;
     const [emailExists, setEmailExists] = useState(false);
-    const router = useRouter()
+    const router = useRouter();
 
     // const [showModal, setShowModal] = useState(false);
 
@@ -103,7 +102,6 @@ export const SignUpForm = () => {
                 onSubmit={async (values, {setSubmitting})  => {
                     try {
                         const data = await fetchUser('signup', values);
-                        console.log(data)
                         if(data.message === 'Email is already exists') {
                             setEmailExists(true);
                         } else {
@@ -117,7 +115,7 @@ export const SignUpForm = () => {
                             // }, 5000)
                         }
                     } catch(error) {
-                        console.log('Error while submitting:', error)
+                        console.error('Error while submitting:', error)
                     } finally {
                         setSubmitting(false)
                     }

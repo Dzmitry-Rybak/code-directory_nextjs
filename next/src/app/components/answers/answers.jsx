@@ -30,7 +30,7 @@ const Answers =  ({questionId, answerById, onMemorizedQuestion, onRepeatQuestion
 
     const onChangeQuestion = async (e) => {
         let nextQuestionId;
-        console.log(e.target.dataset)
+
         if(e.target.dataset.action === 'next' || e.target.dataset.action === 'Memorized') {
             nextQuestionId = ++questionId;
         } else if(e.target.dataset.action === 'prev') {

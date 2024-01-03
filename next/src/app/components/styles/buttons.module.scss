@@ -24,6 +24,10 @@
         width: 150px;
         height: 30px;
     }
+    @media (max-width: 576px) {
+        width: 80px;
+        font-size: 8px;
+    }
     &__filter {
         background-color: transparent;
         border: 1px solid #000;

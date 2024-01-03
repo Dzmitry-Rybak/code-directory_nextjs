@@ -12,9 +12,9 @@ export const QuestionsView = memo(function QuestionsView({repeatQuestion, memori
         }
         switch (filter) {
             case 'repeat':
-                return items.filter((item, i) => repeatQuestion.includes(String(item.question_id)));
+                return items.filter((item, i) => repeatQuestion.includes(item.question_id));
             case 'remaining':
-                return items.filter((item, i) => !memorizedQuestions.includes(String(item.question_id)));
+                return items.filter((item, i) => !memorizedQuestions.includes(item.question_id));
             case 'all':
                 return items
             default:
@@ -32,6 +32,7 @@ export const QuestionsView = memo(function QuestionsView({repeatQuestion, memori
 
     return (
         <Questions 
+                filter={filter}
                 questions={questions} 
                 repeatQuestion={repeatQuestion}
                 memorizedQuestions={memorizedQuestions}

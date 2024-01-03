@@ -1,6 +1,6 @@
 "use client"
 import { useState } from 'react';
-import {useRouter} from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 // import Modal from '../../modal/Modal';
 import { signout, deleteAccount } from '../lib/data';
@@ -13,14 +13,12 @@ const Dashboard = () => {
 
     const router = useRouter();
 
-    // const _APIURL = config.apiUrl;
-
     const handleLogout = () => {
         signout();
         setShowModal(true)
         setTimeout(() => {
-            router.push('/');
             setShowModal(false);
+            router.push('/');
         }, 3000)
     }
 
@@ -29,14 +27,14 @@ const Dashboard = () => {
         setShowModal(true);
         setTimeout(() => {
             setShowModal(false);
-            router.push('/');
+            router.push('/')
         }, 4000)
     }
 
     return (
         <div className='center-container'>
             <div className={styles.logout__wrapper}>
-                <h2>Hi, username</h2>
+                <h2>Hi</h2>
                 <p>Your journey of discovery awaits! Don't miss a beat—keep nurturing your curiosity and expanding your horizons with us. 🧠✨
                 <br/><br/> 
                 If you're looking to switch lanes, 'Change Account' is your gateway. Ready to wrap up? 'Log Out' and take a well-earned rest. Keep soaring high with your studies!"</p>

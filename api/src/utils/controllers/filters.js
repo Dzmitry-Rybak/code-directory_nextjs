@@ -13,12 +13,11 @@ const getFilters = async (req, res) => {
         try {
                     
             const query = `SELECT * FROM user_question_marks where user_id = ${userId} AND stack = 'questions_${req.query.stack}_${req.query.language}' `
-    
+            
             const client =  await pool.connect();
             const result = await client.query(query);
         
             client.release();
-    
             return res.status(200).json({message: 'Data received successfully', data: result.rows[0]})
     
         } catch(err) {

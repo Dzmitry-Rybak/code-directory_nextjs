@@ -1,16 +1,24 @@
 'use client'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { QuestionsOverview } from "../quesitons/questionsOverview";
 import { QuestionsView } from "../quesitons/questionsView";
 import Answers from "../answers/answers";
-import styles from '@/app/components/styles/home.module.scss'
+import { postFilteredQuestons } from "../lib/data";
 
-const MainPage = ({stack, questionId, questionsData, answerById}) => {
+import styles from '@/app/components/styles/home.module.scss';
+
+const MainPage = ({stack,language, questionId, questionsData, answerById, repeat, memorized}) => {
     const [repeatQuestion, setRepeatQuestion] = useState([]);
     const [memorizedQuestions, setMemorizedQuestions] = useState([]);
 
-    const onRepeatQuestion = id => {
+    useEffect(() => {
+        setRepeatQuestion(repeat);
+        setMemorizedQuestions(memorized);
+    }, [repeat, memorized])
+
+
+    const onRepeatQuestion = async id => {
         let updatedRepeatQuestions = [];
         if (repeatQuestion.includes(id)) {
             updatedRepeatQuestions = repeatQuestion.filter(questionId => questionId !== id);
@@ -22,11 +30,11 @@ const MainPage = ({stack, questionId, questionsData, answerById}) => {
         setRepeatQuestion(updatedRepeatQuestions);
         setMemorizedQuestions(updatedMemorizedQuestions);
 
-        // sendUpdateFiltersRequest('repeat', updatedRepeatQuestions)
-        // sendUpdateFiltersRequest('memorized', updatedMemorizedQuestions)
+        await postFilteredQuestons(stack, language, 'repeat', updatedRepeatQuestions);
+        await postFilteredQuestons(stack, language, 'memorized', updatedMemorizedQuestions);
     }
       
-    const onMemorizedQuestion = id => {
+    const onMemorizedQuestion = async id => {
         let updatedMemorizedQuestions = [];
         if (memorizedQuestions.includes(id)) {
             updatedMemorizedQuestions = memorizedQuestions.filter(questionId => questionId !== id);
@@ -38,8 +46,8 @@ const MainPage = ({stack, questionId, questionsData, answerById}) => {
         setMemorizedQuestions(updatedMemorizedQuestions);
         setRepeatQuestion(updatedRepeatQuestions);
 
-        // sendUpdateFiltersRequest('memorized', updatedMemorizedQuestions)
-        // sendUpdateFiltersRequest('repeat', updatedRepeatQuestions)
+        await postFilteredQuestons(stack, language, 'memorized', updatedMemorizedQuestions);
+        await postFilteredQuestons(stack, language, 'repeat', updatedRepeatQuestions);
     }
 
     return (

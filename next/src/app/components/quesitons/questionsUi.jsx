@@ -10,7 +10,7 @@ import stylesQuestions from './questions.module.scss';
 import stylesUi from './questionsUi.module.scss';
 
 
-export const QuestionsVisible = ({questions, repeatQuestion, memorizedQuestions, onFilterQuestions}) => {
+export const QuestionsVisible = ({questions, repeatQuestion, memorizedQuestions, onFilterQuestions, filter}) => {
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const { replace } = useRouter();
@@ -32,6 +32,7 @@ export const QuestionsVisible = ({questions, repeatQuestion, memorizedQuestions,
         <div style={{width: '50%'}}>
             <QuestionsFilter 
                 onFilterQuestions={onFilterQuestions}
+                filter={filter}
             />
             <div className={stylesQuestions.questions__list}>
                 <ol>
@@ -46,8 +47,8 @@ export const QuestionsVisible = ({questions, repeatQuestion, memorizedQuestions,
                                         [stylesQuestions.questions__item],
                                         {
                                             [stylesQuestions.questions__item_selected]: handleId === itemId,
-                                            [stylesQuestions.repeat]: repeatQuestion.includes(String(itemId)),
-                                            [stylesQuestions.memorized]: memorizedQuestions.includes(String(itemId))
+                                            [stylesQuestions.repeat]: repeatQuestion.includes(itemId),
+                                            [stylesQuestions.memorized]: memorizedQuestions.includes(itemId)
                                         }
                                     )}
                                     onClick={() => onSelectQuestionsId(itemId)}>{item.question}</li>
@@ -57,11 +58,26 @@ export const QuestionsVisible = ({questions, repeatQuestion, memorizedQuestions,
         </div>
 )};
 
-export const QuestionsHidden = ({ answers, questions }) => {
+export const QuestionsHidden = ({questions, repeatQuestion, memorizedQuestions, onFilterQuestions, filter}) => {
     const { burgerToggle, onToggleBurger } = useAppState();
+
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const { replace } = useRouter();
+
+    // Проверяем доступен ли объект window
+    const handleId = typeof window !== 'undefined' ? parseInt(window.localStorage.getItem('id')) : null; 
+    
+    const onSelectQuestionsId = (id) => {
+        window.localStorage.setItem('id', JSON.stringify(id))
+        const params = new URLSearchParams(searchParams);
+        params.set('id', id);
+        
+        replace(`${pathname}?${params.toString()}`);
+    }
+    
     return (
         <>
-            {answers}
             <CSSTransition
                 in={burgerToggle}
                 timeout={300}
@@ -72,24 +88,35 @@ export const QuestionsHidden = ({ answers, questions }) => {
                     exitDone: stylesUi.menu_exit_done,
                   }}>
                     <div className={stylesUi.menu} onClick={onToggleBurger}>
-                        <div className={stylesUi.blur}/>
+                        
                         <div className={stylesUi.menu__content} onClick={e => e.stopPropagation()}>
                             <QuestionsFilter 
-                                // onFilterQuestions={onFilterQuestions}
-                                // filter={filter}
+                                onFilterQuestions={onFilterQuestions}
+                                filter={filter}
                             />
                             {/* ${stylesUi.burger_hight}  - не помню зачем еще доп этот класс был ниже прописан*/}
                             <div className={stylesQuestions.questions__list}>
                             <ol>                                
                                 {questions.map(item => {
+                                    const itemId = item.question_id;    
                                     return <li 
-                                                key={item.question_id}
-                                                className={stylesQuestions.questions__item}>{item.question}
-                                            </li>
+                                                key={itemId}
+                                                className= {clsx(
+                                                    [stylesQuestions.questions__item],
+                                                    {
+                                                        [stylesQuestions.questions__item_selected]: handleId === itemId,
+                                                        [stylesQuestions.repeat]: repeatQuestion.includes(itemId),
+                                                        [stylesQuestions.memorized]: memorizedQuestions.includes(itemId)
+                                                    }
+                                                )}
+                                                onClick={() => {
+                                                    onSelectQuestionsId(itemId)
+                                                    onToggleBurger()}}>{item.question}</li>
                                 })}
                             </ol>
                         </div>
                         </div>
+                        {/* <div className={stylesUi.blur}/> */}
                     </div>
             </CSSTransition>
         </>

@@ -8,7 +8,7 @@ export const QuestionsFilter = ({onFilterQuestions, filter}) => {
         {filter: "remaining", descr: 'Remaining questions'},
         {filter: "repeat", descr: 'Questions to repeat'},
         {filter: "all", descr: 'All questions'},
-    ]
+    ];
 
     return (
         <div className={stylesUi.filter}>
@@ -19,7 +19,7 @@ export const QuestionsFilter = ({onFilterQuestions, filter}) => {
                         key={btn.filter}
                         className={clsx( `${stylesBtn.button} ${stylesBtn.button__filter}`,
                             {
-                                [stylesBtn.button__filter_active]: filter === `${btn.filter}` // не знаю или можно так помещать
+                                [stylesBtn.button__filter_active]: filter === `${btn.filter}`
                             })}
                         data-filter={btn.filter}
                         onClick={() => onFilterQuestions(`${btn.filter}`)}>{btn.descr}

@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { QuestionsVisible, QuestionsHidden } from "./questionsUi";
 
-const Questions = ({questions, repeatQuestion, memorizedQuestions, onFilterQuestions}) => {
+const Questions = ({questions, repeatQuestion, memorizedQuestions, onFilterQuestions, filter}) => {
         const [isSmallScreen, setIsSmallScreen] = useState(false);
         
         const handleResize = () => {
@@ -22,16 +22,22 @@ const Questions = ({questions, repeatQuestion, memorizedQuestions, onFilterQuest
             handleResize();
             window.addEventListener('resize', handleResize) 
             return () => window.removeEventListener('resize', handleResize)
-            
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [])
         
-        return <QuestionsVisible 
-                    questions={questions}
-                    repeatQuestion={repeatQuestion}
-                    memorizedQuestions={memorizedQuestions}
-                    onFilterQuestions={onFilterQuestions}/>
-        // return  !isSmallScreen ? <QuestionsHidden questions={questions}/> : <QuestionsVisible questions={questions}/>
+        return  !isSmallScreen ? 
+                    <QuestionsHidden 
+                        questions={questions}
+                        filter={filter}
+                        repeatQuestion={repeatQuestion}
+                        memorizedQuestions={memorizedQuestions}
+                        onFilterQuestions={onFilterQuestions}/>
+                : 
+                    <QuestionsVisible
+                        questions={questions}
+                        filter={filter}
+                        repeatQuestion={repeatQuestion}
+                        memorizedQuestions={memorizedQuestions}
+                        onFilterQuestions={onFilterQuestions}/>
 }
 
 export default Questions;
