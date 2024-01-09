@@ -1,5 +1,9 @@
-import { AddQuestionForm } from "@/app/components/form/form"
-import styles from '@/app/components/styles/form.module.scss';
+import { AddQuestionForm } from "@/app/components/form/add-question-form";
+import styles from '@/app/styles/form.module.scss';
+
+export const metadata = {
+    title: 'Add question',
+};
 
 const QuestionAddFormPage = () => {
     return (

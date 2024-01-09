@@ -8,9 +8,6 @@ export const validSchemaSignIn = Yup.object({
               .required('Please field'),
     password: Yup.string()
                  .required('Required field'),
-    terms: Yup.boolean()
-              .required('Required field')
-              .oneOf([true], 'Consent is required')
 })
 
 export const validSchemaSignUp = Yup.object({

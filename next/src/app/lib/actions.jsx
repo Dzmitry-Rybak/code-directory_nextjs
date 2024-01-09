@@ -15,7 +15,7 @@ const createHeadersWithToken = () => {
     return { headers };
 }
 
-export async function postQuestion (formData) {
+export const postQuestion = async (formData) => {
     const {headers} = createHeadersWithToken();
     const _APIURL = config.apiUrl;
 

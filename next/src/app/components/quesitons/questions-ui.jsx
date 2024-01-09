@@ -2,31 +2,14 @@
 import { CSSTransition } from 'react-transition-group';
 import clsx from 'clsx';
 import { useAppState } from '@/app/context';
-import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 
-import { QuestionsFilter } from './questionsFilter';
-
+import { QuestionsFilter } from './questions-filter';
 import stylesQuestions from './questions.module.scss';
 import stylesUi from './questionsUi.module.scss';
-
+import { useQuestionsNavigation } from '../utils/questions-utils';
 
 export const QuestionsVisible = ({questions, repeatQuestion, memorizedQuestions, onFilterQuestions, filter}) => {
-    const searchParams = useSearchParams();
-    const pathname = usePathname();
-    const { replace } = useRouter();
-
-    // Проверяем доступен ли объект window
-    const handleId = typeof window !== 'undefined' ? parseInt(window.localStorage.getItem('id')) : null; 
-    
-    const onSelectQuestionsId = (id) => {
-        window.localStorage.setItem('id', JSON.stringify(id))
-        const params = new URLSearchParams(searchParams);
-        params.set('id', id);
-        
-        replace(`${pathname}?${params.toString()}`);
-    }
-
-
+    const { handleId, onSelectQuestionsId } = useQuestionsNavigation();
 
     return (
         <div style={{width: '50%'}}>
@@ -60,24 +43,10 @@ export const QuestionsVisible = ({questions, repeatQuestion, memorizedQuestions,
 
 export const QuestionsHidden = ({questions, repeatQuestion, memorizedQuestions, onFilterQuestions, filter}) => {
     const { burgerToggle, onToggleBurger } = useAppState();
-
-    const searchParams = useSearchParams();
-    const pathname = usePathname();
-    const { replace } = useRouter();
-
-    // Проверяем доступен ли объект window
-    const handleId = typeof window !== 'undefined' ? parseInt(window.localStorage.getItem('id')) : null; 
-    
-    const onSelectQuestionsId = (id) => {
-        window.localStorage.setItem('id', JSON.stringify(id))
-        const params = new URLSearchParams(searchParams);
-        params.set('id', id);
-        
-        replace(`${pathname}?${params.toString()}`);
-    }
+    const { handleId, onSelectQuestionsId } = useQuestionsNavigation();
     
     return (
-        <>
+        <div>
             <CSSTransition
                 in={burgerToggle}
                 timeout={300}
@@ -94,7 +63,6 @@ export const QuestionsHidden = ({questions, repeatQuestion, memorizedQuestions, 
                                 onFilterQuestions={onFilterQuestions}
                                 filter={filter}
                             />
-                            {/* ${stylesUi.burger_hight}  - не помню зачем еще доп этот класс был ниже прописан*/}
                             <div className={stylesQuestions.questions__list}>
                             <ol>                                
                                 {questions.map(item => {
@@ -116,9 +84,9 @@ export const QuestionsHidden = ({questions, repeatQuestion, memorizedQuestions, 
                             </ol>
                         </div>
                         </div>
-                        {/* <div className={stylesUi.blur}/> */}
+                        <div className={stylesUi.blur}/>
                     </div>
             </CSSTransition>
-        </>
+        </div>
     )
 }

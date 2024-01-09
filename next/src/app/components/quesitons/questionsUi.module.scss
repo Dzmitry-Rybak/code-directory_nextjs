@@ -1,4 +1,4 @@
-@import '../styles/variables.module.scss';
+@import '../../styles/variables.module.scss';
 
 .filter {
     margin-bottom: 10px;
@@ -20,6 +20,7 @@
 
 
 .blur {
+    z-index: -1;
     position: fixed;
     top: 0;
     left: 0;
@@ -29,6 +30,7 @@
 }
 
 .menu {
+    z-index: 10;
     transition: all 0.3s;
     visibility: hidden;
     opacity: 0;

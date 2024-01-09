@@ -1,5 +1,5 @@
-import {HomeSkeleton} from '@/app/components/skeletons/skeletons';
+import Spinner from "@/app/components/spinner/spinner";
 
 export default function Loading() {
-    return <HomeSkeleton/>
+    return <Spinner/>;
 }

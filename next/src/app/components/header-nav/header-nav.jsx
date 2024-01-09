@@ -7,9 +7,9 @@ import clsx from 'clsx';
 import { useAppState } from '@/app/context';
 import Cookies from 'js-cookie';
 
-import {DropdownStack, DropdownTranslate} from '../dropdownMenu/dropdownMenu';
+import {DropdownStack, DropdownTranslate} from '../dropdown-menu/dropdown-menu';
 
-import styles from  '@/app/components/headernav/headernav.module.scss';
+import styles from  '@/app/components/header-nav/header-nav.module.scss';
 
 
 const Header = () => {

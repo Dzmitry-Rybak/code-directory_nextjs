@@ -2,7 +2,6 @@
 import { unstable_noStore as noStore } from 'next/cache';
 import {cookies} from 'next/headers';
 import config from '@/config/config';
-import { headers } from '../../../../next.config';
 
 const _APIURL = config.apiUrl;
 
@@ -100,8 +99,6 @@ export async function postFilteredQuestons(stack, language, filter, data) {
         body: JSON.stringify({filter: filter, array: data}),
         headers: headers
     })
-
-
 }
 
 

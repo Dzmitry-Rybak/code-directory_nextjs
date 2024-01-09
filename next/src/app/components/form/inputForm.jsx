@@ -2,7 +2,7 @@ import Image from 'next/image';
 import {useField} from 'formik';
 import clsx from 'clsx';
 
-import styles from '@/app/components/styles/form.module.scss';
+import styles from '@/app/styles/form.module.scss';
 
 export const TextInput = ({placeholder, ...props}) => {
     const [field, meta, helpers] = useField(props);

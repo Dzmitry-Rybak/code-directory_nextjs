@@ -1,5 +1,5 @@
 import styles from './skeletons.module.scss';
-import stylesHome from '@/app/components/styles/home.module.scss';
+import stylesHome from '@/app/styles/home.module.scss';
 
 export const SkeletonOverview = () => {
     return (

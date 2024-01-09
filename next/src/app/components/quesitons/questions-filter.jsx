@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import stylesUi from './questionsUi.module.scss';
-import stylesBtn from '@/app/components/styles/buttons.module.scss';
+import stylesBtn from '@/app/styles/buttons.module.scss';
 
 export const QuestionsFilter = ({onFilterQuestions, filter}) => {
 

@@ -1,5 +1,5 @@
 'use client'
-import styles from './dropdownMenu.module.scss';
+import styles from './dropdown-menu.module.scss';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 
 export const DropdownStack = ({ stackItems, name }) => {

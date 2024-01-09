@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import styles from '@/app/components/styles/not-found.module.scss';
+import styles from '@/app/styles/not-found.module.scss'
 
 const Page404 = () => {
     return (

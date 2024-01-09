@@ -5,16 +5,16 @@ import Questions from './questions';
 export const QuestionsView = memo(function QuestionsView({repeatQuestion, memorizedQuestions, questionData}) {
     const [questions, setQuestions] = useState([]);
     const [filter, setFilter] = useState('all');
+    
     const filterQuestions = (items, filter) => {
         if(repeatQuestion.length === 0 && filter === 'repeat') {
-            return ([])
-
+            return []
         }
         switch (filter) {
             case 'repeat':
-                return items.filter((item, i) => repeatQuestion.includes(item.question_id));
+                return items.filter((item) => repeatQuestion.includes(item.question_id));
             case 'remaining':
-                return items.filter((item, i) => !memorizedQuestions.includes(item.question_id));
+                return items.filter((item) => !memorizedQuestions.includes(item.question_id));
             case 'all':
                 return items
             default:

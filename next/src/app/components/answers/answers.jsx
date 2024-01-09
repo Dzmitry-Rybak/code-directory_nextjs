@@ -1,24 +1,32 @@
 'use client'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import clsx from 'clsx';
 
-import FullscreenView from './fullScreen';
+import FullscreenView from './fullscreen';
 
 import styles from './answers.module.scss';
-import stylesBtn from '@/app/components/styles/buttons.module.scss';
+import stylesBtn from '@/app/styles/buttons.module.scss';
 
-const Answers =  ({questionId, answerById, onMemorizedQuestion, onRepeatQuestion}) => {
+const Answers =  ({questionId, answerById, onMemorizedQuestion, onRepeatQuestion, lastQuestionId}) => {
     const {replace} = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
     const [activeClass, setActiveClass] = useState(false);
     const [activeFullScreen, setActiveFullScreen] = useState(false);
+    const [disableNextButton, setDisableNextButton] = useState(false);
+    const [disablePrevButton, setDisablePrevButton] = useState(false);
 
     const {question, answer, example_path} = answerById;
 
     const buttonName = !activeClass ? 'Example' : 'Hide';
+
+    useEffect(() => {
+        // если вопрос последний или первый делаем disable button
+        setDisableNextButton(questionId === lastQuestionId);
+        setDisablePrevButton(questionId === 1);
+    }, [questionId, lastQuestionId])
 
     const onToggleActive = (activeClass) => {
         setActiveClass(!activeClass)
@@ -54,7 +62,11 @@ const Answers =  ({questionId, answerById, onMemorizedQuestion, onRepeatQuestion
                                                                     alt="example"
                                                                     onClick={() => onFullScreenImg(activeFullScreen)}
                                                                     />
-                                                                : <h4>Sorry, there is no example</h4>
+                                                                : <h4 className={clsx(
+                                                                    [styles.answers__image],
+                                                                    {
+                                                                        [styles.active]: activeClass
+                                                                    })}>Sorry, there is no example</h4>
     return (        
             <div className={styles.answers}>
                 <div className={styles.answers__question}>
@@ -66,36 +78,45 @@ const Answers =  ({questionId, answerById, onMemorizedQuestion, onRepeatQuestion
                 </div>
                 <div className={styles.answers__btn}>
                     <button 
-                    className={`${stylesBtn.button__submit} ${stylesBtn.button}`}
-                    // className={!disableNextButton ? "button" : "button button-disable"}
-                    data-action="prev"
-                    // disabled={disableNextButton}
-                    onClick={onChangeQuestion}>Prev question</button>
+                        className={clsx(
+                            [stylesBtn.button],
+                            {
+                                [stylesBtn.button__disable]: disablePrevButton
+                            }
+                        )}
+                        data-action="prev"
+                        disabled={disablePrevButton}
+                        onClick={onChangeQuestion}>Prev question</button>
 
                     <button 
-                    className={`${stylesBtn.button__submit} ${stylesBtn.button}`}
+                    className={`${stylesBtn.button}`}
                     data-action="Example"
                     onClick={() => onToggleActive(activeClass)}>{buttonName}</button>
+                    
+                    <button 
+                        className={clsx(
+                            [stylesBtn.button],
+                            {
+                                [stylesBtn.button__disable]: disableNextButton
+                            }
+                        )}
+                        data-action="next"
+                        disabled={disableNextButton}
+                        onClick={onChangeQuestion}>Next question</button>
 
                     <button 
-                    className={`${stylesBtn.button__submit} ${stylesBtn.button}`}
+                    className={`${stylesBtn.button}`}
                     data-action="Repeat"
                     onClick={() => onRepeatQuestion(questionId)}>Repeat</button>
 
                     <button 
-                    className={`${stylesBtn.button__submit} ${stylesBtn.button}`}
+                    className={`${stylesBtn.button}`}
+                    style={{ gridRow: "2", gridColumn: "3" }}
                     data-action="Memorized"
                     onClick={(e) => {
                         onMemorizedQuestion(questionId);
                         onChangeQuestion(e)
                         }}>Memorized</button>
-
-                    <button 
-                    className={`${stylesBtn.button__submit} ${stylesBtn.button}`}
-                    // className={!disableNextButton ? "button" : "button button-disable"}
-                    data-action="next"
-                    // disabled={disableNextButton}
-                    onClick={onChangeQuestion}>Next question</button>
                 </div>
                 {!activeFullScreen ? 
                     <div className={styles.answers__example}>{isAvailableImg}</div> 

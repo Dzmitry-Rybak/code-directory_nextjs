@@ -1,8 +1,12 @@
 .modal {
+    z-index: 10;
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s;
     position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 450px;
     font-size: 14px;
     padding: 10px;
@@ -14,23 +18,17 @@
     border-radius: 17px;
     &:hover {
         border: 2px solid black;
-        transform: scale(1.05);
+        transform: translate(-50%, -50%) scale(1.05);
     }
-    &-enter {
+    &_enter {
+        opacity: 1;
+        visibility: visible;
+        transition: all 400ms;
+    }
+    &_exit {
         opacity: 0;
-        &-active {
-            opacity: 1;
-            visibility: visible;
-            transition: all 400ms;
-          }
-    }
-    &-exit {
-        opacity: 1; 
-        &-active {
-            opacity: 0;
-            visibility: hidden;
-            transition: all 400ms;
-          }
+        visibility: hidden;
+        transition: all 400ms;
     }   
     @media (max-width: 768px) {
         width: 250px;
@@ -39,7 +37,7 @@
     }
 }
 
-.modal-error {
+.modal__error {
     transition: all 0.3s;
     position: absolute;
     width: 450px;

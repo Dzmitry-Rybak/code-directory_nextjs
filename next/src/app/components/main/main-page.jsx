@@ -1,12 +1,12 @@
 'use client'
 import { useState, useEffect } from "react";
 
-import { QuestionsOverview } from "../quesitons/questionsOverview";
-import { QuestionsView } from "../quesitons/questionsView";
+import { QuestionsOverview } from "../quesitons/questions-overview";
+import { QuestionsView } from "../quesitons/questions-view";
 import Answers from "../answers/answers";
-import { postFilteredQuestons } from "../lib/data";
+import { postFilteredQuestons } from "../../lib/data";
 
-import styles from '@/app/components/styles/home.module.scss';
+import styles from '@/app/styles/home.module.scss';
 
 const MainPage = ({stack,language, questionId, questionsData, answerById, repeat, memorized}) => {
     const [repeatQuestion, setRepeatQuestion] = useState([]);
@@ -58,9 +58,8 @@ const MainPage = ({stack,language, questionId, questionsData, answerById, repeat
                     questionData={questionsData}
                     repeatQuestion={repeatQuestion}
                     memorizedQuestions={memorizedQuestions}/>
-            
-
                 <Answers
+                    lastQuestionId={questionsData.length}
                     answerById={answerById}
                     questionId={questionId} 
                     onRepeatQuestion={onRepeatQuestion}
