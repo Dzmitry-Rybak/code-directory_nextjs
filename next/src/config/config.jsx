@@ -1,5 +1,5 @@
 const config = {
-    apiUrl: process.env.REACT_APP_API_URL || 'localhost:5000',
+    apiUrl: process.env.REACT_APP_API_URL || 'http://192.168.0.109:5000',
     socialLinks: {
         instagram: 'https://instagram.com/example'
     },

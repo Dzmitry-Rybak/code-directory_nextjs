@@ -6,7 +6,7 @@ dotenv.config();
 
 const POSTGRESQL_HOST = process.env.POSTGRESQL_HOST || 'postgres';
 const POSTGRESQL_USER = process.env.POSTGRESQL_USER || 'postgres';
-const POSTGRESQL_PORT = process.env.POSTGRESQL_PORT || '5432';
+const POSTGRESQL_PORT = process.env.POSTGRESQL_PORT || 5432;
 const POSTGRESQL_PASSWORD = process.env.POSTGRESQL_PASSWORD || '23400';
 const POSTGRESQL_DB = process.env.POSTGRESQL_DB || 'codedirectory';
 

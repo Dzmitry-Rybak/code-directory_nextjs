@@ -1,9 +1,9 @@
 import { SignInForm, SignUpForm } from "@/app/components/form/form";
 import styles from '@/app/styles/form.module.scss';
 
-export const metadata = {
-    title: 'Sign in',
-};
+// export const metadata = {
+//     title: 'Sign in',
+// };
 
 const SignInPage = () => {
     

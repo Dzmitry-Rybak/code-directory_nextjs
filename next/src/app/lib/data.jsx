@@ -40,7 +40,6 @@ export async function fetchAnswer (questionId, stack, language) {
 
 export async function fetchQuestionsData (stack, language) {
     noStore(); // отказываемся от статического кэширования (создаем динаический маршрут)
-    
     const stackRequest = stack.toLowerCase();
     const languageRequest = language.toLowerCase();
     const {headers} = createHeadersWithToken();
